@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music Player</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<style type="text/css">
+		body{
+			font-family: 'Open Sans', sans-serif;
+			background: linear-gradient(45deg,#eee2fa,#f6e6f3);
+		}
+		.wrap{
+			height: 490px;
+			width: 300px;
+			margin: 50px auto;
+			box-shadow: 0px 0px 200px 10px #73737347;
+			border-radius: 40px;
+		}
+		.topcover{
+			height: 90px;
+			z-index: 2;
+			padding: 14px 20px;
+			background: radial-gradient(circle 280px at 0% 50%,#CED4EA, #fff);
+			box-shadow: 0 22px 50px -20px #555;
+			border-radius: 40px 40px 0 0;
+			border: 1px solid #dfdcec;
+			position: relative;
+			text-align: center;
+		}
+		.topcover::after{
+			content: '';
+			box-shadow: 0 30px 30px -20px #555;
+		}
+		.topcover .title{
+			padding: 1px 0;
+			font-weight: bold;
+			font-family: 'Open Sans', sans-serif;
+			font-size: 28px;
+		}
+		.artist, .title, .album{
+			color: #7B7B7B;
+			font-size: 15px;
+			font-weight: bold;
+			font-family: 'Open Sans', sans-serif;
+		}
+		.albumart{
+			text-align: center;
+			position: relative;
+			z-index: 0;
+			height: 260px;
+		}
+		.albumart img {
+			z-index: 0;
+			margin: 0px 0px -5px 0;
+			box-shadow: 5px 0px 0px #ffffff82, -5px 0px 0px #ffffff82;
+		}
+		.albumart::before{
+			content: '';
+			border-width: 20px 20px 0px 20px;
+			position: absolute;
+			width: 258px;
+			height: 20px;
+			left: 0px;
+			border-color: #D8605F transparent transparent transparent;
+			border-style: solid;
+			z-index: -232;
+		}
+		.albumart::after{
+			content: '';
+			border-width: 0px 20px 20px 20px;
+			position: absolute;
+			width: 258px;
+			height: 20px;
+			left: 0px;
+			bottom: 0;
+			border-color: #D8605F transparent #B0429B transparent;
+			border-style: solid;
+			z-index: -2;
+		}
+		.bottomcover{
+			position: relative;
+			background: radial-gradient(circle 230px at 0% 50%,#fff, #CED4EA);
+			height: 112px;
+			z-index: 2;
+			border-radius: 0 0 40px 40px;
+			box-shadow: 0 -22px 50px -20px #555;
+			border: 1px solid #D9D6E9;
+		}
+		.track-progress{
+			height: 10px;
+    		padding: 15px 20px 15px;
+    		font-size: 11px;
+    		color: #666666;
+			/*background-color: #eee;*/
+		}
+		.controls{
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 2px 40px;
+			text-align: center;
+		}
+		.backward:hover,.forward:hover,.play:hover,.pause:hover{
+			color:#525252;
+		}
+		.backward,.forward,.play,.pause{
+			flex:1;
+			color: #989898;
+			font-size: 32px;
+		}
+		.play{
+			color:#666;
+			font-size: 50px;
+			content: 'play_arrow';
+		}
+		.track-bar{
+			position: relative;
+			height: 6px;
+			width: 200px;
+			border-radius: 5px;
+			background: linear-gradient(90deg, #8C39E1,#E57F8C);
+			display: inline-block;
+			margin: 0 4px;
+			animation-name: play-anim;
+			animation-duration: 10s;
+			animation-iteration-count: infinite;
+			animation-direction: normal;
+			animation-timing-function: linear;
+			animation-fill-mode: forwards;
+		}
+		.track-play{
+			animation-play-state:running;
+		}
+		.track-pause{
+			animation-play-state:paused;
+		}
+		.track-bar::before{
+			width: 200px;
+			content: '';
+			background: #bdbdbdcf;
+			height: 6px;
+			position: absolute;
+			z-index: -1;
+			border-radius: 5px;
+		}
+		.start-time{
+			float: left;
+		}
+		.stop-time{
+			float: right;
+		}
+		@keyframes play-anim{
+			0%{
+				width: 1px;
+			}
+			100%{
+				width: 200px;
+			}
+		}
+		.albumimage{
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			left: 20px;
+			height: 260px;
+			width: 260px;
+			transform-origin: 50% 50% -130px;
+			/*animation: zoomin 2s infinite linear;*/
+		}
+		.zoomin{
+			animation: zoomin 1s 1 linear;
+			animation-fill-mode: forwards;
+		}
+		.zoomout{
+			animation: zoomout 1s 1 linear;
+			animation-fill-mode: forwards;
+		}
+
+		@keyframes zoomout {
+			0%{
+
+			}
+			100%{
+				opacity: 0;
+				transform: scale(0.5);
+			}
+		}
+		@keyframes zoomin {
+		
+			0%{
+				opacity: 0;
+				transform: scale(0.5);
+			}
+			100%{
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+
+		@keyframes rotate3d {
+			0%{
+				/*opacity: 1;*/
+				/*transform: scale(0.7) ;*/
+
+			}
+			1%, 20%{
+				opacity: 0;
+				/*transform: scale(0.8) rotatey(360deg);*/
+			}
+			50%{
+				opacity: 0;
+				/*transform: scale(0.6) rotatey(360deg);*/
+			}
+			99%,
+			100% {
+				opacity: 1;
+				transform: scale(1) rotatey(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+<p style="display: none;">
+https://cdn.dribbble.com/users/1677309/screenshots/3508191/daily-ui-009-music-player-800.jpg
+</p>
+	<div class="wrap">
+		<div class="topcover">
+			<div class="title">Thunder</div>
+			<div class="artist">Imagine Dragons</div>
+			<div class="album">Thunder</div>
+		</div>
+		<div class="albumart">
+			<img class="albumimage" style="opacity: 0" src="album2.jpg" width="260" height="260" />
+			<img class="albumimage" src="album.jpg" width="260" height="260" />
+			<img class="albumimage" style="opacity: 0" src="album3.jpg" width="260" height="260" />
+		</div>
+		<div class="bottomcover">
+			<div class="track-progress">
+				<span class="start-time">0:00</span>
+				<span class="track-bar track-pause" id="track_bar"></span>
+				<span class="stop-time">5:00</span>
+			</div>
+			<div class="controls">
+				<div class="backward material-icons" id="back_btn">fast_rewind</div>
+				<div class="play material-icons" id="play_btn">play_arrow</div>
+				<div class="forward material-icons" id="forward_btn">fast_forward</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var playBtn = document.getElementById('play_btn');
+		var forBtn = document.getElementById('forward_btn');
+		var backBtn = document.getElementById('back_btn');
+		var trackBar = document.getElementById('track_bar');
+		var im = document.getElementsByClassName('albumimage');
+		var curTrack = 1;
+
+
+		play_btn.addEventListener('click', function(){
+			if(trackBar.classList.contains('track-pause')){
+				trackBar.classList.remove('track-pause');
+				trackBar.classList.add('track-play');
+				playBtn.textContent="pause";	
+			}else{
+				trackBar.classList.add('track-pause');
+				trackBar.classList.remove('track-play');
+				playBtn.textContent="play_arrow";
+			}
+		});
+
+		forBtn.addEventListener('click', function(){
+
+			if(curTrack<im.length-1){
+				console.log(curTrack);
+				console.log(im.length);
+				im.item(curTrack).classList.remove('zoomin');
+				im.item(curTrack).classList.add('zoomout');
+			
+				curTrack += 1;
+				var curItem = im.item(curTrack);
+				curItem.classList.remove('zoomout');
+				curItem.classList.add('zoomin');
+			}
+		});
+
+		backBtn.addEventListener('click', function(){
+			if(curTrack>0){
+				im.item(curTrack).classList.remove('zoomin');
+				im.item(curTrack).classList.add('zoomout');
+				curTrack -= 1;
+				var curItem = im.item(curTrack);
+				curItem.classList.remove('zoomout');
+				curItem.classList.add('zoomin');
+			}
+		});
+	</script>
+</body>
+</html>

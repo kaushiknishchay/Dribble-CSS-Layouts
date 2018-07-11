@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Daily Ui #42 - ToDo List</title>
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+	<style type="text/css">
+		.text-left{
+			text-align: left;	
+		}
+		.text-center{
+			text-align: center;	
+		}
+		.text-right{
+			text-align: right;	
+		}
+		.accent{
+			color: #4b8fee !important;
+		}
+		body{
+			background: #f4f6fc;
+			font-family: 'Ubuntu', sans-serif;
+			display: flex;
+		    flex-direction: row;
+		    align-items: center;
+		    text-align: center;
+		    align-content: center;
+		    height: 100%;
+		}
+		.wrap{
+			background: transparent;
+			width: 295px;
+			margin: 4% auto;
+			/*height: 540px;*/
+			position: relative;
+			/*overflow: hidden;*/
+		}
+		.destination-wrap::before{
+			content: '';
+			position: absolute;
+			background-image: url(world2.png);
+			width: 100%;
+			height: 100%;
+			left: 0%;
+			background-size: cover;
+			z-index: 0;
+			top: 0;
+			background-repeat: no-repeat;
+			opacity: 0.06;
+		}
+		.destination-wrap{
+			/*background: radial-gradient(circle at 0 100%, rgba(204,0,0,0) 10px, #427fe4 11px), radial-gradient(circle at 100% 100%, rgba(204,0,0,0) 10px, #427fe4 11px);*/
+			box-shadow: -35px -25px 100px 1px #274fa638, 30px -25px 100px 1px #274fa638;
+			background: radial-gradient(circle at 0 100%, rgba(204,0,0,0) 10px, #3263b3 11px), radial-gradient(circle at 100% 100%, rgba(204,0,0,0) 10px, #3263b3 11px);
+			background-position: bottom left, bottom right;
+			background-size: 60% 100%;
+			background-repeat: no-repeat;
+			height: 95px;
+			padding: 35px;
+			color: #fff;
+			position: relative;
+		}
+		.details-wrap{
+			box-shadow: 0px 15px 40px 1px #274fa638;
+			background: radial-gradient(circle at 0 0%, rgba(204,0,0,0) 10px, #fff 11px), radial-gradient(circle at 100% 0%, rgba(204,0,0,0) 10px, #fff 11px);
+		    background-position: top left, top right;
+		    background-size: 70% 100%;
+		    background-repeat: no-repeat;
+		    padding: 15px 0 20px;
+		    position: relative;
+		    overflow-x: hidden;
+		}
+		.city-names,.flight-times-label{
+			font-size: 10px;
+		    color: #ddd;
+			display: flex;
+			flex-direction: row;
+			text-transform: uppercase;
+		}
+		.city-name,.flight-time{
+			flex: 1
+		}
+		.city-codes,.flight-dept-arr{
+			display: flex;
+			flex-direction: row;
+			font-size: 20px;
+			font-weight: bold;			
+		}
+		.city-code{
+			flex: 0.3;
+		}
+		.plane-filler{
+			position: relative;
+			flex: 1;
+		    background-image: url(plane2.svg);
+		    background-repeat: no-repeat;
+		    background-position-x: 50%; 
+		}
+		.plane-filler::before,.plane-filler::after{
+			content: '•••••••••••';
+		    position: absolute;
+		    font-size: 6px;
+		    letter-spacing: 3px;
+		    line-height: 24px;
+		}
+		.plane-filler::before{
+			left:0px;
+		}
+		.plane-filler::after{
+			right:0px;
+		}
+		.flight-times-label{
+			margin: 30px 0 2px;
+		}
+		.flight-dept-arr{
+			font-size: 15px;
+		}
+		.row-wrap{
+			display: flex;
+			flex-direction: column;
+		    padding: 8px 30px 15px;
+		    /*margin: 10px 0;*/
+		}
+		.row-labels, .row-content{
+			display: flex;
+			flex-direction: row;
+		    margin-bottom: 2px;
+		}
+		.row-label-item {
+			font-size: 10px;
+			color: #888;
+			flex: 1;
+			flex-direction: row;
+			text-transform: uppercase;
+		}
+		.row-items{
+			flex: 1;
+			font-weight: bold;
+			color: #5a5f67;
+		}
+		.full-row{
+			padding: 10px 30px;
+			background: #eef3f6;
+		}
+		.airlines{
+			padding: 10px;
+			border-bottom: 1px dashed #ddd;
+			background: url(air.png);
+			height: 60px;
+			background-repeat: no-repeat;
+			background-position: 50% 40%;
+			background-size: 65%;
+			margin: 10px 30px 20px;
+		}
+		.barcode{
+			background-image: url('barcode2.png');
+			background-size: 60%;
+			background-repeat: no-repeat;
+			background-position: 50%;
+		}
+		.stamp-outer{
+			position: absolute;
+			top: 60%;
+			left: 80%;
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+			border: 1px solid #ddd;
+		}
+		.stamp-inner{
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 1px solid #ddd;
+			position: relative;
+			transform: translate(14px, 14px);
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="destination-wrap">
+			<div class="city-names">
+				<span class="city-name text-left">LOS ANGELES</span>
+				<span class="city-name text-right">LONDON</span>
+			</div>
+			<div class="city-codes">
+				<span class="city-code text-left">LAX</span>
+				<span class="plane-filler"></span>
+				<span class="city-code text-right">LON</span>
+			</div>
+			<div class="flight-times-label">
+				<span class="flight-time text-left">Departure</span>
+				<span class="flight-time text-right">Arrival</span>
+			</div>
+			<div class="flight-dept-arr">
+				<span class="flight-time text-left">17:35</span>
+				<span class="flight-time text-right">21:15</span>
+			</div>
+		</div>
+		<div class="details-wrap">
+			<div class="row-wrap">
+				<div class="row-labels">
+					<span class="row-label-item text-left">Passenger</span>
+					<span class="row-label-item text-right">Seat</span>
+				</div>
+				<div class="row-content">
+					<span class="row-items text-left">Johnson</span>
+					<span class="row-items text-right accent">A-25</span>
+				</div>
+			</div>
+			<div class="row-wrap">
+				<div class="row-labels">
+					<span class="row-label-item text-left">Boarding</span>
+					<span class="row-label-item text-right">Class</span>
+				</div>
+				<div class="row-content">
+					<span class="row-items text-left">26 Jan 18</span>
+					<span class="row-items text-right accent">Business</span>
+				</div>
+			</div>
+			<div class="row-wrap full-row">
+				<div class="row-labels">
+					<span class="row-label-item text-left">Flight</span>
+					<span class="row-label-item text-center">CheckIn</span>
+					<span class="row-label-item text-right">Terminal</span>
+				</div>
+				<div class="row-content">
+					<span class="row-items text-left">AA 704</span>
+					<span class="row-items text-center">E,F,G</span>
+					<span class="row-items text-right">17E</span>
+				</div>
+			</div>
+			<div class="row-wrap airlines"></div>
+			<div class="row-wrap barcode"></div>
+			<div class="stamp-outer">
+				<div class="stamp-inner"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

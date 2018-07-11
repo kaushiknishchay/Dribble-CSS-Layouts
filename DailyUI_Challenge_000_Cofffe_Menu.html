@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DailyUI Challenge 000 Cofffe Menu</title>
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+	<style type="text/css">
+		.text-left{
+			text-align: left;	
+		}
+		.text-center{
+			text-align: center;	
+		}
+		.text-right{
+			text-align: right;	
+		}
+		.accent{
+			color: #4b8fee !important;
+		}
+		body{
+			background: #FF8A8A;
+			font-family: 'Ubuntu', sans-serif;
+			display: flex;
+		    flex-direction: row;
+		    align-items: center;
+		    text-align: center;
+		    align-content: center;
+		    height: 100%;
+		}
+		.wrap{
+			background: transparent;
+			width: 322px;
+			margin: 3% auto;
+			height: 550px;
+			position: relative;
+			background: #EDEFF3;
+			border-radius: 5px;
+			/*overflow: hidden;*/
+		}
+		.toolbar{
+			border-radius: 5px 5px 0 0;
+			background-color: #fff;
+			height: 40px;
+			/*line-height: 30px;*/
+			padding: 15px 20px 15px;
+			display: flex;
+			flex-direction: row;
+			position: relative;
+			align-items: center;
+		}
+		.menu-title{
+			flex: 0.8;
+			letter-spacing: 4px;
+			font-weight: bold;
+			color: #344760;
+		}
+		.menu-icon, .menu-search{
+			display: flex;
+			flex: 0.1;
+			align-self: center;
+			padding: 10px;
+		}
+		.menu-icon:hover, .menu-search:hover{
+			box-shadow: 1px 1px 1px 1px #eee;
+			border-radius: 50%;
+		}
+		.coffee-cup{
+			display: flex;
+			height: 136px;
+			background-color: #fff;
+			padding: 10px;
+			flex-direction: row;
+			align-items: center;
+		}
+		.tabs{
+			background-color: #fff;
+			display: flex;
+			flex-direction: row;
+			padding: 8px 20px 12px;
+			box-shadow: 0px 14px 34px -10px #c7c7c7;
+		}
+		.tab{
+			flex: 1;
+			text-align: center;
+			letter-spacing: 4px;
+			font-weight: bold;
+			color: #344760;
+		}
+		.tab.active{
+			position: relative;
+			text-align: center;
+		}
+		.tab.active::after{
+			content: '';
+			position: absolute;
+			border-bottom: 2px solid #344760;
+			width: 78px;
+			bottom: 0%;
+			left: 0;
+			transform: translate(40%, 12px);
+		}
+		.tab.inactive{
+			color: #ddd;
+			text-align: center;
+		}
+		.tab.inactive:hover{
+			color: #81abe2;
+		}
+		.tabs-container-wrap{
+			height: 261px;
+			padding: 24px 30px 0;
+			overflow: hidden;
+		}
+		.tab-content{
+			display: block;
+			background-color: #fff;
+			border-radius: 6px 6px 0 0;
+			max-width: 245px;
+			height: 260px;
+			box-shadow: 0px 0px 10px 0px #ddd;
+			transition: transform 700ms;
+		}
+		.tab-content.inactive{
+			transform: translate(110%,-100%);
+		}
+		.coffee-table{
+		    padding: 10px 5px 0 20px;
+		    width: 100%;
+		}
+		.table-title{
+			font-size: 10px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			color: #aaa;
+			text-align: left;
+		}
+		.coffee-item > td{
+			padding: 14px 0px;
+			font-size: 14px;
+			text-align: left;
+			color: #344760;
+		}
+		.coffee-name{
+			font-weight: bold;			
+		}
+		.search-box{
+			height: 40px;
+			right: 70px;
+			border-radius: 20px;
+			background-color: #fff;
+			position: absolute;
+			border: 0px solid #ccc;
+			display: none;
+			transition: width 0s;
+			animation: search 300ms;
+			animation-direction: alternate;
+			animation-fill-mode: forwards;
+		}
+		.search-box.show{
+			display: flex;
+			width: 234px;
+		}
+		.search-box.hide{
+			width: 0px;
+			display: none;
+		}
+		.search-input{
+			border: 0;
+			background: transparent;
+			margin: 0px auto;
+			height: 40px;
+			border-radius: 20px;
+			padding: 0 15px;
+			width: 100%;
+			letter-spacing: 1px;
+			color: #555;
+		}
+		@keyframes search{
+			0%{
+				width: 0px;
+			}
+			100%{
+				width: 234px;
+				border-width: 1px;
+			}
+		}
+		@keyframes search-hide{
+			100%{
+				width: 0px;
+				display: none;
+			}
+			0%{
+				display: flex;
+				width: 234px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="toolbar">
+			<div class="menu-icon">
+				<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+					<path fill="#344760" d="M3,6H21V8H3V6M3,16H21V18H3V16Z" />
+				</svg>
+			</div>
+			<div class="menu-title">MENU</div>
+			<div class="menu-search" id="search-icon">
+				<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+					<path fill="#344760" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+				</svg>
+			</div>
+			<div class="search-box" id="search-wrap">
+				<input type="text" id="search-input" class="search-input" name="search" placeholder="search&hellip;"/>
+			</div>
+		</div>
+		<div class="coffee-cup">
+			<img src="cup.svg" id="image-product" height="90" width="100%">
+		</div>
+		<div class="tabs">
+			<div class="tab active" id="tab1">COFFEE</div>
+			<div class="tab inactive" id="tab2">DONUTS</div>
+		</div>
+		<div class="tabs-container-wrap">
+			<div class="tab-content active" id="contenttab1">
+				<table width="100%" class="coffee-table">
+					<thead>
+						<th class="table-title">Shots</th>
+						<th class="table-title" width="45">SML</th>
+						<th class="table-title" width="40">LRG</th>
+					</thead>
+					<tbody>
+						<tr class="coffee-item">
+							<td class="coffee-name">Expresso</td>
+							<td>2.30</td>
+							<td>2.90</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Cappuccino</td>
+							<td>3.10</td>
+							<td>3.50</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Americano</td>
+							<td>1.90</td>
+							<td>2.20</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Caffe Latte</td>
+							<td>2.60</td>
+							<td>3.00</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Macchiato</td>
+							<td>2.20</td>
+							<td>2.70</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-content inactive" id="contenttab2">
+				<table width="100%" class="coffee-table">
+					<thead>
+						<th class="table-title">Shots</th>
+						<th class="table-title" width="45">SML</th>
+						<th class="table-title" width="40">LRG</th>
+					</thead>
+					<tbody>
+						<tr class="coffee-item">
+							<td class="coffee-name">2 Expresso</td>
+							<td>2.30</td>
+							<td>2.90</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Cappuccino</td>
+							<td>3.10</td>
+							<td>3.50</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Americano</td>
+							<td>1.90</td>
+							<td>2.20</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Caffe Latte</td>
+							<td>2.60</td>
+							<td>3.00</td>
+						</tr>
+						<tr class="coffee-item">
+							<td class="coffee-name">Macchiato</td>
+							<td>2.20</td>
+							<td>2.70</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var tab1 = document.getElementById('tab1');
+		var tab2 = document.getElementById('tab2');
+		var searchIcon = document.getElementById('search-icon');
+		var prodImage = document.getElementById('image-product');
+
+		var tab1Id = tab1.getAttribute('id');
+		var tab2Id = tab2.getAttribute('id');
+		var tabcontent1 = document.getElementById('content'+tab1Id);
+		var tabcontent2 = document.getElementById('content'+tab2Id);
+
+		tab1.addEventListener("click", function(){
+			console.log('tab1');
+			tab1.className = "tab active";
+			tab2.className="tab inactive";
+
+			prodImage.setAttribute('src', "cup.svg");
+
+			tabcontent1.style.transform = "translate(0%, 0%)";
+			tabcontent2.style.transform = "translate(110%,-100%)";
+
+		});
+
+		tab2.addEventListener("click", function(){
+			console.log('tab2');
+			tab2.className = "tab active";
+			tab1.className="tab inactive"
+			
+			prodImage.setAttribute('src', "donut.svg");
+
+			tabcontent1.style.transform = "translate(-105%,0%)";
+			tabcontent2.style.transform = "translate(5%, -100%)";
+		});
+
+		searchIcon.addEventListener("click", function () {
+			var searchWrap = document.getElementById('search-wrap');
+			if(searchWrap.classList.contains('show')){
+				searchWrap.classList.remove('show');
+				searchWrap.classList.add('hide');
+			}else{
+				searchWrap.classList.remove('hide');
+				searchWrap.classList.add('show');
+			}
+			
+		});
+
+	</script>
+</body>
+</html>
